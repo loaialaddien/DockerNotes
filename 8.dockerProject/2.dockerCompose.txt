@@ -1,0 +1,94 @@
+docker-compose 
+Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration.
+
+-----------------------------------------------------------------------------------------
+Define and run multi-container applications with Docker.
+
+Usage:
+  docker-compose [-f <arg>...] [options] [COMMAND] [ARGS...]
+  docker-compose -h|--help
+
+Options:
+  -f, --file FILE             Specify an alternate compose file
+                              (default: docker-compose.yml)
+  -p, --project-name NAME     Specify an alternate project name
+                              (default: directory name)
+  --verbose                   Show more output
+  --log-level LEVEL           Set log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  --no-ansi                   Do not print ANSI control characters
+  -v, --version               Print version and exit
+  -H, --host HOST             Daemon socket to connect to
+
+  --tls                       Use TLS; implied by --tlsverify
+  --tlscacert CA_PATH         Trust certs signed only by this CA
+  --tlscert CLIENT_CERT_PATH  Path to TLS certificate file
+  --tlskey TLS_KEY_PATH       Path to TLS key file
+  --tlsverify                 Use TLS and verify the remote
+  --skip-hostname-check       Don't check the daemon's hostname against the
+                              name specified in the client certificate
+  --project-directory PATH    Specify an alternate working directory
+                              (default: the path of the Compose file)
+  --compatibility             If set, Compose will attempt to convert keys
+                              in v3 files to their non-Swarm equivalent
+
+Commands:
+  build              Build or rebuild services
+  bundle             Generate a Docker bundle from the Compose file
+  config             Validate and view the Compose file
+  create             Create services
+  down               Stop and remove containers, networks, images, and volumes
+  events             Receive real time events from containers
+  exec               Execute a command in a running container
+  help               Get help on a command
+  images             List images
+  kill               Kill containers
+  logs               View output from containers
+  pause              Pause services
+  port               Print the public port for a port binding
+  ps                 List containers
+  pull               Pull service images
+  push               Push service images
+  restart            Restart services
+  rm                 Remove stopped containers
+  run                Run a one-off command
+  scale              Set number of containers for a service
+  start              Start services
+  stop               Stop services
+  top                Display the running processes
+  unpause            Unpause services
+  up                 Create and start containers
+  version            Show the Docker-Compose version information
+
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------
+version : "3"
+services:       #every service is a separate container
+  redis-server: 
+    image:'redis'
+  node-app:
+    build : .    #build the current directory, (since it has a Docerfile)
+    ports:
+      - "8001":"8081"
+
+//docker will create these two containers on the same network, the port configuration in node-app, is for outside connections
+-----------------------------------------------------
+
+docker-compose up   ==to build&run the docker-compose file, we can add -d to run in the background 
+
+docker-compose up --build === to rebuild and run the docker containers
+
+stopping docker compose containers
+docker-compose down    (you have to be in the directory where the docker-compose.yml file exists)
+----------------------------------------------------------
+container maintenance 
+when the software inside our running container crashes, we want to debug and restart
+if your code exited with code 0 (everything is okay)
+or another code(1,2,3,4,...) 
+
+Restart policies 
+Flag	                    Description
+no	                 Do not automatically restart the container. (the default)
+on-failure	         Restart the container if it exits due to an error, which manifests as a non-zero exit code.
+always	            Always restart the container if it stops. If it is manually stopped, it is restarted only when Docker                      daemon restarts or the container itself is manually restarted. (See the second bullet listed in                            restart details)
+unless-stopped	    Similar to always, except that when the container is stopped (manually or otherwise), it is not                            restarted  even after Docker daemon restarts.
+-------------------------------------------------------------------------------------------------------------

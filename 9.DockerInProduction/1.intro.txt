@@ -1,0 +1,19 @@
+application using docker and publishing it
+
+development workflow 
+         __________
+        ||         |
+        \/         |
+    development    | 
+        ||         |
+        \/         |
+    Testing        |
+        ||         |
+        \/         |
+    Deployment     |
+        |          | 
+        |__________|
+
+
+=======================
+we are going to create a react application

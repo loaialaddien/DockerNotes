@@ -1,0 +1,35 @@
+if we do 
+docker run redis 
+redis will run but if we want to use the redis-cli with it , it won't have access to the container where redis is up and running 
+we want to start the redis cli within the same container where redis is up 
+docker exec -it <container id> <command>
+docker exec -it df5c591cd99b redis-cli   (df5c591cd99b is the id of my redis container)
+127.0.0.1:6379> set myName loai
+OK
+127.0.0.1:6379> get myName
+"loai"
+
+the -it flag importance 
+-it is short for --interactive + --tty when you docker run with this command.. it would take you straight inside of the container,The ‘-it’ in a docker command makes the container interactive with the terminal, if we don't add it, it will terminate immediately
+how it works 
+
+--interactive , -i		Keep STDIN open even if not attached
+-t		                prettying the output
+
+every container has three channels to communicate with the other containers and the terminal 
+Stdin - Stdout - Stderr
+stdin to get input
+stdout to output 
+stderr to output errors 
+
+when we use -i it means we want to attach our terminal to the stdin of the redis-cli.
+
+
+
+docker exec -it <container id> <command> sh
+will give you a shell within your container, you can do all the commands within your container 
+to exit it, we can ctl+c or ctl+d 
+
+
+
+

@@ -1,0 +1,1 @@
+the project is simply 3 node containers connected to a redis server that stores the number of visits to our site

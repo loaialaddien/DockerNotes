@@ -1,0 +1,1 @@
+see folder 7.dockerProject for instruction about how to build a dockerFile

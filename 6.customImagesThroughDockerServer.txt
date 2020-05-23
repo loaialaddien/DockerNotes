@@ -1,0 +1,47 @@
+Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image. Using docker build users can create an automated build that executes several command-line instructions in succession.
+
+This page describes the commands you can use in a Dockerfile. When you are done reading this page, refer to the Dockerfile Best Practices for a tip-oriented guide.
+
+Usage
+The docker build command builds an image from a Dockerfile and a context. The build’s context is the set of files at a specified location PATH or URL. The PATH is a directory on your local filesystem. The URL is a Git repository location
+
+
+creating a docker file
+    - specify a base image
+    - run some commands to install additional programs 
+    - specify a command to run on a container startup
+
+create an image file that runs redis-server when it starts up
+see folder redis-image
+
+it will look like this , it's important to go to the folder for more info about what each line does
+```
+# use an exisitng docker image as a base
+FROM alpine (the base) 
+# download and install a dependency 
+RUN apk add --update redis ()
+# tell the image what to do when it starts as a container
+CMD ["redis-server"] (what should be executed when a new image starts)
+```
+
+////////////this is a recap, see the folder redis-image for more info//////////////////
+
+to recap, in the first step we install a base image, 
+in every step afterwards we look for the image created in the previous step and run the command in it, it will create a new image to be used in the next step.
+
+docker uses cache, so whenever you edit your dockerfile, it's going to realize the steps that hasn't changed and get the snapshot right before things changed form cache and then starts building the new image, that's why it's fast
+
+
+////////////////////////////////////////////////////////
+
+giving a docker image a tag, to make it easier to refer to it
+
+docker build . -t (your docker id/projectname:version)
+docker build . -t (loaialaa/redis:latest)
+
+
+
+//////////////////////
+to create an image out of a running container with a command as a starting process
+docker commit  -c 'CMD ["redis-server"]' imageID, this can help us create the docker file process manually
+

@@ -1,0 +1,78 @@
+///////
+we need to 
+    - specify a base image
+    - run some commands to install additional programs 
+    - specify a command to run on a container startup
+
+we can take the image as alpine
+we can run the command npm install to install dependencies 
+we can then add npm start as our CMD 
+
+
+# use an exisitng docker image as a base
+FROM alpine
+# downlload and install  dependencies
+RUN npm install
+# Default command
+CMD ["npm","start"]
+////if we use this we will get an error, npm: not found, since alpine has no npm package manager installed
+
+we can either use another base image that has npm in it or install npm
+
+OR 
+we can use an image with npm pre-configured in it
+
+
+///////////////////////////iteration 2 //////////////
+FROM node:10
+# replace this with your application's default port
+EXPOSE 8080
+# downlload and install  dependencies
+
+RUN npm install
+# Default command
+CMD ["npm","start"]
+
+//if we do this we get error ENOENT: no such file or directory, open '/package.json
+
+////////////////////////////////////////////////////
+
+
+we need to connect the image to the rest of the hard drive to see our file system, to make sure it sees the files 
+
+this happens using the COPY command, 
+we specify the directory to copy files from to our container , the path is realative to the build directory]
+
+docker build .
+copy ./ ./  (the path here is relative to the . above )
+remember this is not by reference, this is actually copying the files, so if we change it, it will have to be rebuilt.
+
+when copying your file copy it to a new directory in the container, don't just copy them in the root folder because you might accidentally override some existing directories there
+===see specifying a working directory below (WORKDIR)
+
+//////////////////////////////////////
+to allow the container to listen to outside traffic we need to expose that port during running the container 
+
+docker run -p 8080:8080 7709d33bf158
+            (the port to listen to: the port to map in our docker container) (the image id)
+the two ports doesn't have to be the same
+
+////////////////////////////
+starting a shell inside my container 
+docker run -it <image-id> sh
+
+/////////////////////////////
+specifying a working directory 
+WORKDIR command
+any following command will be executed relative to this path in the container
+
+so when we do 
+WORKDIR /usr/app
+copy ././
+the files will be used 
+
+///////////////////////////////////
+
+unnecessary building steps
+when we change something in our files and recopy again, all the commands that are after it will be executed again, things like npm install will be run again with no need to do it
+this is why we need to split the copying step, into two steps, copying the package.json file and running npm install then copying the rest of files

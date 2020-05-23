@@ -1,0 +1,13 @@
+project outline
+creating a nodejs web app , wrap it in a container then run it locally
+
+steps 
+create node js web app
+create a dockerfile
+build image from dockerfile
+run image as a container 
+connect to wep app from a browser
+
+
+
+

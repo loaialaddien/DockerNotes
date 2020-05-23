@@ -1,0 +1,49 @@
+                image 
+fs snapshot                 Startup command
+hello-world                 run hello-world
+
+
+                container
+    process
+        ||
+    kernel
+        ||
+    Ram,network,cpu,filesystem
+
+when we run the command run-helloworld
+
+docker takes the fs snapshot and puts it in the filesystem available for the container, and the process became hello world
+
+
+                container
+    process(hello-world)
+        ||
+    kernel
+        ||
+    Ram,network,cpu,filesystem(fs snapshot hello-world)
+======================================================================
+=============docker run command variations ===========================
+
+docker run imageName override command (echo hi there is the override command below)
+docker run busybox echo hi there 
+
+these override commands has to exist within the docker image so i can override it, if it doesn't exist, it will throw an error
+running docker run hello-world echo hi there will throw, because within its fs snapshot there's no echo command 
+
+///////////////////////////////////////////
+docker ps   to get all running containers 
+response 
+CONTAINER ID        IMAGE                                                 COMMAND                  CREATED          STATUS              PORTS                    NAMES
+bb7b819b99d3        docker.elastic.co/elasticsearch/elasticsearch:7.3.0   "/usr/local/bin/dock…"   2 hours ago         Up 2 hours          9200/tcp, 9300/tcp       es
+349c926829ed        docker.elastic.co/kibana/kibana:7.3.0                 "/usr/local/bin/kiba…"   2 hours ago         Up 2 hours          0.0.0.0:5601->5601/tcp   kibana
+
+
+//////
+
+
+
+container life cycle 
+
+docker run = docker create + docker start
+when you run the command docker run, it creates a container from the image then starts it
+remember to use -a flag when using docker start, it will attach to the container and output to the console what the container is outputting 

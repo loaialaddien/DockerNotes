@@ -1,0 +1,38 @@
+
+removing stopped containers
+
+    docker system prune
+
+        WARNING! This will remove:
+                - all stopped containers
+                - all networks not used by at least one container
+                - all dangling images
+                - all build cache           (build cache is any image you got from docker hub, you'll have to re-download)
+
+
+retrieving logs 
+docker logs containerId
+        Name, shorthand	Default	Description
+        --details		Show extra details provided to logs
+        --follow , -f		Follow log output
+        --since		Show logs since timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)
+        --tail	all	Number of lines to show from the end of the logs
+        --timestamps , -t		Show timestamps
+        --until		API 1.35+
+        Show logs before a timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)
+
+
+stopping a container 
+--docker stop containerId
+    docker sends a sigterm (termination signal) to the process, on which, you give time to the process to terminate itself(within your code you should listen for that event, do cleanup work) within 10 seconds, if it doesn't, docker will issue a kill command which will wait for no body
+--docker kill containerId
+    
+
+ 1056  docker ps | awk -F ' ' '{print $1}'
+ 1057  docker ps | awk -F ' ' 'NR>1{print $1}'
+ 1058  docker ps | awk -F ' ' 'NR>1{print $1}' | xargs echo
+ 1059  docker ps | awk -F ' ' 'NR>1{print $1}' | xargs docker rm --force 
+ 
+ docker ps | awk -F ' ' 'NR>1{print $1}' | xargs docker rm --force 
+
+list all running processes, pipe them to awk, awk prints only the first colums of the rows > 1, pipe the output to xargs that takes standard input and build and executes command lines 

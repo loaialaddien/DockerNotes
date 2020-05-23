@@ -1,0 +1,12 @@
+docker is a tool that makes executing some tasks alot easier
+it's not necessarily a requirement.
+
+-------------------------
+since we will create two docker files, one for production , one for development
+the file for development will be called Dockerfile.development
+to be able to build it we need to use -f flag since docker build looks for a file named Dockerfile without any extension 
+
+docker build -f Dockerfile.dev .
+
+
+-------------------------

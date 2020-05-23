@@ -1,0 +1,33 @@
+Docker Image is a set of files which has no state, whereas Docker Container is the instantiation of Docker Image. In other words, Docker Container is the run time instance of images.
+
+images are frozen immutable snapshots of live containers. Containers are running (or stopped) instances of some image.
+
+
+to run an image from a Container we use 
+docker run (container)
+
+                image 
+fs snapshot                 Startup command
+hello-world                 run hello-world
+
+
+                container
+    process
+        ||
+    kernel
+        ||
+    Ram,network,cpu,filesystem
+
+when we run the command run-helloworld
+
+docker takes the fs snapshot and puts it in the filesystem available for the container, and the process became hello world
+
+
+                container
+    process(hello-world)
+        ||
+    kernel
+        ||
+    Ram,network,cpu,filesystem(fs snapshot hello-world)
+
+
